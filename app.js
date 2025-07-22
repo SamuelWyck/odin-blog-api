@@ -5,6 +5,7 @@ const path = require("node:path");
 const {addUserToReq} = require("./utils/authMiddleware.js");
 const authRoute = require("./routes/authRoute.js");
 const postsRoute = require("./routes/postsRoute.js");
+const adminRoute = require("./routes/adminRoute.js");
 
 
 
@@ -19,6 +20,7 @@ app.use(passport.initialize());
 app.use(addUserToReq);
 
 app.use("/auth", authRoute);
+app.use("/admin", adminRoute);
 app.use("/posts", postsRoute);
 app.get("/", function(req, res) {
     return res.send(`hello ${req.user}`);
