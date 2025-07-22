@@ -1,11 +1,23 @@
 const express = require("express");
 require("dotenv").config();
+const passport = require("./utils/passport.js");
+const path = require("node:path");
+const {addUserToReq} = require("./utils/authMiddleware.js");
+const authRoute = require("./routes/authRoute.js");
 
 
 
 app = express();
 
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
+app.use(passport.initialize());
+
+app.use(addUserToReq);
+
+app.use("/auth", authRoute);
 app.get("/", function(req, res) {
     return res.send(`hello ${req.user}`);
 });
