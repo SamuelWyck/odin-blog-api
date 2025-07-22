@@ -7,8 +7,16 @@ function authUser(req, res, next) {
         return res.status(401).json({errors: [{msg: "Client not authenticated"}]})
     }
 
-    req.user = user;
-    next();
+    return next();
+};
+
+
+function isAdmin(req, res, next) {
+    if (!req.user.isAdmin) {
+        return res.status(401).json({errors: {msg: "Client is not admin"}});
+    }
+
+    return next();
 };
 
 
@@ -28,5 +36,6 @@ function addUserToReq(req, res, next) {
 
 module.exports = {
     authUser,
-    addUserToReq
+    addUserToReq,
+    isAdmin
 };
