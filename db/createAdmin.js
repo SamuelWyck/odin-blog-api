@@ -12,7 +12,7 @@ async function main() {
         data: {
             firstname: process.argv[2],
             lastname: process.argv[3],
-            username: process.argv[3],
+            username: process.argv[4],
             password: pwdHash,
             isAdmin: true
         }
