@@ -4,7 +4,7 @@ const jwt = require("./jwt.js");
 
 function authUser(req, res, next) {
     if (!req.user) {
-        return res.status(401).json({errors: [{msg: "Client not "}]})
+        return res.status(401).json({errors: [{msg: "Client not authenticated"}]})
     }
 
     req.user = user;
@@ -15,6 +15,7 @@ function authUser(req, res, next) {
 function addUserToReq(req, res, next) {
     const token = jwt.parseHeaderToken(req);
     if (!token) {
+        req.user = null;
         return next();
     }
 
