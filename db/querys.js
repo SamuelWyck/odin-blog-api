@@ -14,9 +14,21 @@ async function createUser(options) {
     await prisma.user.create(options);
 };
 
+async function findPosts(options) {
+    const posts = await prisma.post.findMany(options);
+    return posts;
+};
+
+async function findUniquePost(options) {
+    const post = await prisma.post.findUnique(options);
+    return post;
+};
+
 
 
 module.exports = {
     findUniqueUser,
-    createUser
+    createUser,
+    findPosts,
+    findUniquePost
 };
