@@ -6,6 +6,7 @@ const {addUserToReq} = require("./utils/authMiddleware.js");
 const authRoute = require("./routes/authRoute.js");
 const postsRoute = require("./routes/postsRoute.js");
 const adminRoute = require("./routes/adminRoute.js");
+const commentsRoute = require("./routes/commentsRoute.js");
 
 
 
@@ -22,6 +23,7 @@ app.use(addUserToReq);
 app.use("/auth", authRoute);
 app.use("/admin", adminRoute);
 app.use("/posts", postsRoute);
+app.use("/comments", commentsRoute);
 app.get("/", function(req, res) {
     return res.send(`hello ${req.user}`);
 });
