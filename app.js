@@ -24,8 +24,13 @@ app.use("/auth", authRoute);
 app.use("/admin", adminRoute);
 app.use("/posts", postsRoute);
 app.use("/comments", commentsRoute);
-app.get("/", function(req, res) {
-    return res.send(`hello ${req.user}`);
+
+app.use(function(req, res) {
+    return res.json({errors: [{msg: "Invalid route"}]});
+});
+
+app.use(function(error, req, res, next) {
+    return res.json({errors: [{msg: "Internal error"}], errorInfo: error});
 });
 
 
