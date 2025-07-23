@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 require("dotenv").config();
 const passport = require("./utils/passport.js");
 const path = require("node:path");
@@ -12,6 +13,7 @@ const commentsRoute = require("./routes/commentsRoute.js");
 
 app = express();
 
+app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
