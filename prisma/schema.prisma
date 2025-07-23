@@ -41,7 +41,6 @@ model Comment {
   id        String    @id @default(uuid())
   text      String
   createdAt DateTime  @default(now())
-  editedAt  DateTime?
   author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  String
   parent    Post      @relation(fields: [parentId], references: [id], onDelete: Cascade)
