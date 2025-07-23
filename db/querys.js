@@ -24,11 +24,26 @@ async function findUniquePost(options) {
     return post;
 };
 
+async function createComment(options) {
+    await prisma.comment.create(options);
+};
+
+async function editComment(options) {
+    await prisma.comment.update(options);
+};
+
+async function deleteComment(options) {
+    await prisma.comment.delete(options);
+};
+
 
 
 module.exports = {
     findUniqueUser,
     createUser,
     findPosts,
-    findUniquePost
+    findUniquePost,
+    createComment,
+    editComment,
+    deleteComment
 };
