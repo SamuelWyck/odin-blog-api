@@ -6,7 +6,7 @@ const authController = require("../controllers/authController.js");
 const authRoute = Router();
 
 
-authRoute.post("/signip", authController.signUpPost);
+authRoute.post("/signup", authController.signUpPost);
 authRoute.post("/login", authController.loginPost);
 
 
