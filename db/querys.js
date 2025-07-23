@@ -36,6 +36,18 @@ async function deleteComment(options) {
     await prisma.comment.delete(options);
 };
 
+async function createPost(options) {
+    await prisma.post.create(options);
+};
+
+async function editPost(options) {
+    await prisma.post.update(options);
+};
+
+async function deletePost(options) {
+    await prisma.post.delete(options);
+};
+
 
 
 module.exports = {
@@ -45,5 +57,8 @@ module.exports = {
     findUniquePost,
     createComment,
     editComment,
-    deleteComment
+    deleteComment,
+    createPost,
+    editPost,
+    deletePost
 };
