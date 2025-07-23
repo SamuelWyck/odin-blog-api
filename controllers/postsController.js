@@ -4,7 +4,7 @@ const db = require("../db/querys.js");
 
 
 const allPostsGet = asynchandler(async function(req, res) {
-    const posts = db.findPosts({
+    const posts = await db.findPosts({
         where: {
             posted: true
         },
@@ -12,7 +12,11 @@ const allPostsGet = asynchandler(async function(req, res) {
             createdAt: "desc"
         },
         include: {
-            author: true
+            author: {
+                select: {
+                    username: true
+                }
+            }
         }
     });
 
@@ -30,13 +34,21 @@ const postGet = asynchandler(async function(req, res) {
         include: {
             comments: {
                 include: {
-                    author: true
+                    author: {
+                        select: {
+                            username: true
+                        }
+                    }
                 },
                 orderBy: {
                     createdAt: "desc"
                 }
             },
-            author: true
+            author: {
+                select: {
+                    username: true
+                }
+            }
         }
     });
 
