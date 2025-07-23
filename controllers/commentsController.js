@@ -2,7 +2,6 @@ const asynchandler = require("express-async-handler");
 const db = require("../db/querys.js");
 const {commentVal} = require("../utils/validator.js");
 const {validationResult} = require("express-validator");
-const datetime = require("datetime");
 
 
 
@@ -47,7 +46,6 @@ const editCommentPut = asynchandler(async function(req, res) {
         },
         data: {
             text: text,
-            editedAt: now()
         }
     });
 
