@@ -40,7 +40,24 @@ const signupVal = [
 ];
 
 
+const commentVal = [
+    body("text").trim()
+        .notEmpty().withMessage("Comment must not be empty")
+];
+
+
+const postVal = [
+    body("title").trim()
+        .notEmpty().withMessage("Title must not be empty")
+        .isLength({max: 200}).withMessage("Title cannot be longer than 200 characters"),
+    body("text").trim()
+        .notEmpty().withMessage("Post cannot be empty")
+];
+
+
 
 module.exports = {
-    signupVal
+    signupVal,
+    commentVal,
+    postVal
 };
