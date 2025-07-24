@@ -20,14 +20,14 @@ const signUpPost = asynchandler(async function(req, res, next) {
     const username = req.body.username.trim();
     const firstName = req.body.firstname.trim();
     const lastName = req.body.lastname.trim();
-    const pwdHash = bcrypt.hash(req.body.password);
+    const pwdHash = await bcrypt.hash(req.body.password, 10);
 
 
     try {
         await db.createUser({
             data: {
                 username: username,
-                firstName: firstName,
+                firstname: firstName,
                 lastname: lastName,
                 password: pwdHash,
                 isAdmin: false
