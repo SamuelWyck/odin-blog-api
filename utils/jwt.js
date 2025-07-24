@@ -23,6 +23,7 @@ function verifyToken(token) {
         }
     );
 
+    delete user.iat;
     return user;
 };
 
