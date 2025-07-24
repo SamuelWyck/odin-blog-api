@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 
 
 const prisma = new PrismaClient();
-const pwdHash = bcrypt.hashSync(process.argv[5]);
+const pwdHash = bcrypt.hashSync(process.argv[5], 10);
 
 
 async function main() {
