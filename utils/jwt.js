@@ -23,7 +23,9 @@ function verifyToken(token) {
         }
     );
 
-    delete user.iat;
+    if (user) {
+        delete user.iat;
+    }
     return user;
 };
 
