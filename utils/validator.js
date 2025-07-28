@@ -43,6 +43,7 @@ const signupVal = [
 const commentVal = [
     body("text").trim()
         .notEmpty().withMessage("Comment must not be empty")
+        .isLength({max: 10000}).withMessage("Comment must be less than 10000 characters")
 ];
 
 
