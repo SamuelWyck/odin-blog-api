@@ -51,7 +51,10 @@ const postVal = [
         .notEmpty().withMessage("Title must not be empty")
         .isLength({max: 200}).withMessage("Title cannot be longer than 200 characters"),
     body("text").trim()
-        .notEmpty().withMessage("Post cannot be empty")
+        .notEmpty().withMessage("Post cannot be empty"),
+    body("preview").trim()
+        .notEmpty().withMessage("Preview cannot be empty")
+        .isLength({max: 100}).withMessage("Preview cannot be longer than 100 characters")
 ];
 
 
