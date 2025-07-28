@@ -69,6 +69,7 @@ const adminNewPostPost = asynchandler(async function(req, res) {
     const authorId = req.user.id;
     const title = req.body.title.trim();
     const text = req.body.text.trim();
+    const preview = req.body.preview.trim();
     const published = (req.body.published) ? true : false;
 
     await db.createPost({
@@ -76,6 +77,7 @@ const adminNewPostPost = asynchandler(async function(req, res) {
             authorId: authorId,
             title: title,
             text: text,
+            preview: preview,
             posted: published
         }
     });
@@ -94,6 +96,7 @@ const adminEditPostPut = asynchandler(async function(req, res) {
     const authorId = req.user.id;
     const text = req.body.text.trim();
     const title = req.body.title.trim();
+    const preview = req.body.preview.trim();
     const published = (req.body.published) ? true : false;
 
     await db.editPost({
@@ -104,6 +107,7 @@ const adminEditPostPut = asynchandler(async function(req, res) {
         data: {
             text: text,
             title: title,
+            preview: preview,
             posted: published
         }
     });
