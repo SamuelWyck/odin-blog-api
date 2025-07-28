@@ -30,6 +30,7 @@ model Post {
   createdAt DateTime  @default(now())
   title     String
   text      String
+  preview   String    
   author    User      @relation(fields: [authorId], references: [id])
   authorId  String
   posted    Boolean   @default(true)
