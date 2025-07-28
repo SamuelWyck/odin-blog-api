@@ -140,6 +140,14 @@ const adminDeleteCommentDelete = asynchandler(async function(req, res) {
 });
 
 
+const adminGetApiKeyGet = asynchandler(async function(req, res) {
+    return res.json({
+        key: process.env.EDITOR_API_KEY,
+        user: req.user
+    });
+});
+
+
 
 module.exports = {
     adminPostsGet,
@@ -153,5 +161,6 @@ module.exports = {
         adminEditPostPut
     ],
     adminDeletePostDelete,
-    adminDeleteCommentDelete
+    adminDeleteCommentDelete,
+    adminGetApiKeyGet
 };
