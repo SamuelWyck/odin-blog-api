@@ -16,6 +16,7 @@ adminRoute.post("/posts/new", adminController.adminNewPostPost);
 adminRoute.put("/posts/edit/:postId", adminController.adminEditPostPut);
 adminRoute.delete("/posts/delete/:postId", adminController.adminDeletePostDelete);
 adminRoute.delete("/comments/delete/:commentId", adminController.adminDeleteCommentDelete);
+adminRoute.get("/apikey", adminController.adminGetApiKeyGet);
 
 
 
