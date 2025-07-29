@@ -39,6 +39,8 @@ const postGet = asynchandler(async function(req, res) {
         },
         include: {
             comments: {
+                take: pagination.commentTakeNumber,
+                skip: pagination.clacCommentSkipNumber(0),
                 include: {
                     author: {
                         select: {
