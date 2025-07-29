@@ -1,10 +1,16 @@
 const asynchandler = require("express-async-handler");
 const db = require("../db/querys.js");
+const pagination = require("../utils/paginationManager.js");
 
 
 
 const allPostsGet = asynchandler(async function(req, res) {
+    const pageNumber = (req.query.pageNumber) ? 
+        Number(req.query.pageNumber) : 0;
+
     const posts = await db.findPosts({
+        skip: pagination.calcPostSkipNumber(pageNumber),
+        take: pagination.postTakeNumber,
         where: {
             posted: true
         },
