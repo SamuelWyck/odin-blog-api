@@ -40,17 +40,21 @@ const adminPostGet = asynchandler(async function(req, res) {
             authorId: userId
         },
         include: {
-            author: true,
+            author: {
+                select: {
+                    username: true
+                }
+            },
             comments: {
-                orderBy: {
-                    createdAt: "desc"
-                },
                 include: {
                     author: {
                         select: {
                             username: true
                         }
                     }
+                },
+                orderBy: {
+                    createdAt: "desc"
                 }
             }
         }
