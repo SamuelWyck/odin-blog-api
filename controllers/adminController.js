@@ -2,13 +2,18 @@ const asynchandler = require("express-async-handler");
 const db = require("../db/querys.js");
 const {validationResult} = require("express-validator");
 const {postVal} = require("../utils/validator.js");
+const pagination = require("../utils/paginationManager.js");
 
 
 
 const adminPostsGet = asynchandler(async function(req, res) {
     const userId = req.user.id;
+    const pageNumber = (req.query.pageNumber) ?
+        req.query.pageNumber : 0;
 
     const posts = await db.findPosts({
+        skip: pagination.calcPostSkipNumber(pageNumber),
+        take: pagination.postTakeNumber,
         where: {
             authorId: userId
         },
