@@ -53,7 +53,7 @@ const adminPostGet = asynchandler(async function(req, res) {
             },
             comments: {
                 take: pagination.commentTakeNumber,
-                skip: pagination.clacCmtSkipNumber(pageNumber),
+                skip: pagination.calcCmtSkipNumber(pageNumber),
                 include: {
                     author: {
                         select: {

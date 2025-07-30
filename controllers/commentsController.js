@@ -76,7 +76,7 @@ const getCommentsGet = asynchandler(async function(req, res) {
     
     const comments = await db.findComments({
         take: pagination.commentTakeNumber,
-        skip: pagination.clacCmtSkipNumber(pageNumber),
+        skip: pagination.calcCmtSkipNumber(pageNumber),
         where: {
             parentId: postId
         },

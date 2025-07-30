@@ -9,7 +9,7 @@ class PaginationManager {
         return pageNum * (this.postTakeNumber - 1);
     };
 
-    clacCmtSkipNumber(pageNum) {
+    calcCmtSkipNumber(pageNum) {
         return pageNum * (this.commentTakeNumber - 1);
     };
 };
