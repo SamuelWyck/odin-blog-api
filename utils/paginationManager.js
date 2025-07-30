@@ -1,16 +1,16 @@
 class PaginationManager {
     constructor() {
-        this.postTakeNumber = 10;
-        this.commentTakeNumber = 20;
+        this.postTakeNumber = 11;
+        this.commentTakeNumber = 11;
     };
 
 
     calcPostSkipNumber(pageNum) {
-        return pageNum * this.postTakeNumber;
+        return pageNum * (this.postTakeNumber - 1);
     };
 
-    clacCommentSkipNumber(pageNum) {
-        return pageNum * this.commentTakeNumber;
+    clacCmtSkipNumber(pageNum) {
+        return pageNum * (this.commentTakeNumber - 1);
     };
 };
 
