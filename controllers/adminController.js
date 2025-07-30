@@ -37,6 +37,7 @@ const adminPostsGet = asynchandler(async function(req, res) {
 const adminPostGet = asynchandler(async function(req, res) {
     const userId = req.user.id;
     const postId = req.params.postId;
+    const pageNumber = 0;
 
 
     const post = await db.findUniquePost({
@@ -51,6 +52,8 @@ const adminPostGet = asynchandler(async function(req, res) {
                 }
             },
             comments: {
+                take: pagination.commentTakeNumber,
+                skip: pagination.clacCmtSkipNumber(pageNumber),
                 include: {
                     author: {
                         select: {
