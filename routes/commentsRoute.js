@@ -7,11 +7,10 @@ const {authUser} = require("../utils/authMiddleware.js");
 const commentsRoute = Router();
 
 
-commentsRoute.use(authUser);
-
-commentsRoute.post("/new", commentsController.newCommentPost);
-commentsRoute.put("/edit/:commentId", commentsController.editCommentPut);
-commentsRoute.delete("/delete/:commentId", commentsController.deleteCommentDelete);
+commentsRoute.post("/new", authUser, commentsController.newCommentPost);
+commentsRoute.put("/edit/:commentId", authUser, commentsController.editCommentPut);
+commentsRoute.delete("/delete/:commentId", authUser, commentsController.deleteCommentDelete);
+commentsRoute.get("/:postId", commentsController.getCommentsGet);
 
 
 
