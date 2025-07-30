@@ -2,6 +2,7 @@ const asynchandler = require("express-async-handler");
 const db = require("../db/querys.js");
 const {commentVal} = require("../utils/validator.js");
 const {validationResult} = require("express-validator");
+const pagination = require("../utils/paginationManager.js");
 
 
 
@@ -68,6 +69,33 @@ const deleteCommentDelete = asynchandler(async function(req, res) {
 });
 
 
+const getCommentsGet = asynchandler(async function(req, res) {
+    const pageNumber = (req.query.pageNumber) ?
+        Number(req.query.pageNumber) : 0;
+    const {postId} = req.params;
+    
+    const comments = await db.findComments({
+        take: pagination.commentTakeNumber,
+        skip: pagination.clacCmtSkipNumber(pageNumber),
+        where: {
+            parentId: postId
+        },
+        include: {
+            author: {
+                select: {
+                    username: true
+                }
+            }
+        },
+        orderBy: {
+            createdAt: "desc"
+        }
+    });
+
+    return res.json({user: req.user, comments});
+});
+
+
 
 module.exports = {
     newCommentPost: [
@@ -78,5 +106,6 @@ module.exports = {
         commentVal,
         editCommentPut
     ],
-    deleteCommentDelete
+    deleteCommentDelete,
+    getCommentsGet
 };
