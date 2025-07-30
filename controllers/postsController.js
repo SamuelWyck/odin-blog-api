@@ -32,6 +32,7 @@ const allPostsGet = asynchandler(async function(req, res) {
 
 const postGet = asynchandler(async function(req, res) {
     const postId = req.params.postId;
+    const pageNumber = 0;
 
     const post = await db.findUniquePost({
         where: {
@@ -40,7 +41,7 @@ const postGet = asynchandler(async function(req, res) {
         include: {
             comments: {
                 take: pagination.commentTakeNumber,
-                skip: pagination.clacCommentSkipNumber(0),
+                skip: pagination.clacCmtSkipNumber(pageNumber),
                 include: {
                     author: {
                         select: {
