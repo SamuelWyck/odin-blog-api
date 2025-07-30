@@ -36,6 +36,11 @@ async function deleteComment(options) {
     await prisma.comment.delete(options);
 };
 
+async function findComments(options) {
+    const comments = await prisma.comment.findMany(options);
+    return comments;
+};
+
 async function createPost(options) {
     await prisma.post.create(options);
 };
@@ -58,6 +63,7 @@ module.exports = {
     createComment,
     editComment,
     deleteComment,
+    findComments,
     createPost,
     editPost,
     deletePost
