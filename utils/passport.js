@@ -24,7 +24,8 @@ passport.use(
             if (!match) {
                 return done(null, false, {msg: errorMessage});
             }
-
+            
+            delete user.email;
             delete user.password;
             return done(null, user);
 
