@@ -1,5 +1,6 @@
 const {body} = require("express-validator");
 const db = require("../db/querys.js");
+const { Prisma } = require("@prisma/client");
 
 
 
@@ -7,6 +8,21 @@ async function isUniqueUsername(username) {
     const user = await db.findUniqueUser({
         where: {
             username: username
+        }
+    });
+
+    if (user) {
+        throw new Error();
+    }
+
+    return true;
+};
+
+
+async function isUniqueEmail(email) {
+    const user = await db.findUniqueUser({
+        where: {
+            email: email
         }
     });
 
@@ -26,16 +42,16 @@ function passwordsMatch(confirmPwd, {req}) {
 
 const signupVal = [
     body("username").trim()
-        .notEmpty().withMessage("Username must not be empty")
+        .notEmpty().withMessage("Username required")
         .matches(/^[^\s]+$/).withMessage("Username must not contain spaces")
         .matches(/[^\d]/).withMessage("Username must contain at least one letter")
         .custom(isUniqueUsername).withMessage("Username is not unique"),
-    body("firstname").trim()
-        .notEmpty().withMessage("First name must not be empty"),
-    body("lastname").trim()
-        .notEmpty().withMessage("Last name must not be empty"),
+    body("email").trim()
+        .notEmpty().withMessage("Email required")
+        .isEmail().withMessage("Not a valid email")
+        .custom(isUniqueEmail).withMessage("Email is not unique"),
     body("confirm")
-        .notEmpty().withMessage("Password must not be empty")
+        .notEmpty().withMessage("Password required")
         .custom(passwordsMatch).withMessage("Passwords do not match")
 ];
 
