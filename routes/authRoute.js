@@ -8,6 +8,7 @@ const authRoute = Router();
 
 authRoute.post("/signup", authController.signUpPost);
 authRoute.post("/login", authController.loginPost);
+authRoute.get("/valid", authController.validateUserGet);
 
 
 
