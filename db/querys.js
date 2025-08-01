@@ -50,7 +50,8 @@ async function editPost(options) {
 };
 
 async function deletePost(options) {
-    await prisma.post.delete(options);
+    const post = await prisma.post.delete(options);
+    return post;
 };
 
 
