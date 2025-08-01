@@ -32,11 +32,15 @@ app.use(function(req, res) {
 });
 
 app.use(function(error, req, res, next) {
-    return res.json({errors: [{msg: "Internal error"}], errorInfo: error});
+    return res.json(
+        {errors: [{msg: "Internal error"}], errorInfo: error}
+    );
 });
 
 
 const PORT = process.env.PORT;
 
 
-app.listen(PORT, function() {console.log(`Server running on port ${PORT}!`)});
+app.listen(PORT, function() {
+    console.log(`Server running on port ${PORT}!`)
+});
