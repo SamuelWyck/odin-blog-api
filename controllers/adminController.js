@@ -3,6 +3,7 @@ const db = require("../db/querys.js");
 const {validationResult} = require("express-validator");
 const {postVal} = require("../utils/validator.js");
 const pagination = require("../utils/paginationManager.js");
+const cloudinary = require("../utils/cloudinary.js");
 
 
 
@@ -78,6 +79,19 @@ const adminNewPostPost = asynchandler(async function(req, res) {
         return res.status(400).json({errors: errors.array()});
     }
 
+    let imageUrl = null;
+    let imageId = null;
+    if (req.file) {
+        const image = await cloudinary.uploadImg(req.file.path);
+        if (!image) {
+            return res.status(500).json({
+                errors: [{msg: "Error uploadling image"}]
+            });
+        }
+        imageUrl = image.url;
+        imageId = image.id;
+    }
+
     const authorId = req.user.id;
     const title = req.body.title.trim();
     const text = req.body.text.trim();
@@ -90,7 +104,9 @@ const adminNewPostPost = asynchandler(async function(req, res) {
             title: title,
             text: text,
             preview: preview,
-            posted: published
+            posted: published,
+            imageUrl: imageUrl,
+            imageId: imageId
         }
     });
 
@@ -110,18 +126,45 @@ const adminEditPostPut = asynchandler(async function(req, res) {
     const title = req.body.title.trim();
     const preview = req.body.preview.trim();
     const published = (req.body.published) ? true : false;
+    const deleteImg = (req.body.deleteImg) ? true : false;
+    const imageId = req.body.imageId;
+
+
+    let newImageUrl = null;
+    let newImageId = null;
+    if ((deleteImg && imageId) && !req.file) {
+        await cloudinary.deleteImg(imageId);
+    } else if (req.file) {
+
+        const [image] = await Promise.all([
+            cloudinary.uploadImg(req.file.path),
+            cloudinary.deleteImg(imageId)
+        ]);
+        newImageUrl = image.url;
+        newImageId = image.id;
+    }
+
+    let data = {
+        text: text,
+        title: title,
+        preview: preview,
+        posted: published
+    };
+    if (req.file) {
+        data.imageUrl = newImageUrl;
+        data.imageId = newImageId;
+    } else if (deleteImg) {
+        data.imageUrl = null;
+        data.imageId = null;
+    }
+    
 
     await db.editPost({
         where: {
             id: postId,
             authorId: authorId
         },
-        data: {
-            text: text,
-            title: title,
-            preview: preview,
-            posted: published
-        }
+        data: data
     });
 
     return res.json({data: "Success"});
@@ -132,12 +175,15 @@ const adminDeletePostDelete = asynchandler(async function(req, res) {
     const postId = req.params.postId;
     const authorId = req.user.id;
 
-    await db.deletePost({
+    const post = await db.deletePost({
         where: {
             id: postId,
             authorId: authorId
         }
     });
+    if (post.imageId) {
+        await cloudinary.deleteImg(post.imageId);
+    }
 
     return res.json({data: "Success"});
 });
