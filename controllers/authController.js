@@ -64,6 +64,18 @@ const loginPost = asynchandler(async function(req, res) {
 });
 
 
+const validateUserGet = asynchandler(async function(req, res) {
+    if (!req.query.token) {
+        return res.json({valid: false});
+    }
+
+    const token = req.query.token;
+    const user = jwt.verifyToken(token);
+    
+    return res.json({valid: (user) ? true : false});
+});
+
+
 
 module.exports = {
     signUpPost: [
@@ -71,5 +83,6 @@ module.exports = {
         signUpPost,
         loginPost
     ],
-    loginPost
+    loginPost,
+    validateUserGet
 };
