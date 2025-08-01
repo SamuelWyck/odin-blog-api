@@ -35,7 +35,8 @@ model Post {
   authorId  String
   posted    Boolean   @default(true)
   comments  Comment[]
-  //add thumbnail banner image maybe
+  imageUrl  String?
+  imageId   String?
 }
 
 model Comment {
