@@ -3,16 +3,15 @@ const bcrypt = require("bcryptjs");
 
 
 const prisma = new PrismaClient();
-const pwdHash = bcrypt.hashSync(process.argv[5], 10);
+const pwdHash = bcrypt.hashSync(process.argv[4], 10);
 
 
 async function main() {
     console.log("creating admin...");
     await prisma.user.create({
         data: {
-            firstname: process.argv[2],
-            lastname: process.argv[3],
-            username: process.argv[4],
+            email: process.argv[2],
+            username: process.argv[3],
             password: pwdHash,
             isAdmin: true
         }
