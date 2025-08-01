@@ -6,6 +6,7 @@ function generateToken(user) {
     const token = jwt.sign(
         user, 
         process.env.TOKEN_SECRET,
+        {expiresIn: "7d"}
     );
     return token;
 };
@@ -25,6 +26,7 @@ function verifyToken(token) {
 
     if (user) {
         delete user.iat;
+        delete user.exp;
     }
     return user;
 };
