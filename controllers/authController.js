@@ -17,18 +17,16 @@ const signUpPost = asynchandler(async function(req, res, next) {
         });
     }
 
+    const email = req.body.email.trim();
     const username = req.body.username.trim();
-    const firstName = req.body.firstname.trim();
-    const lastName = req.body.lastname.trim();
     const pwdHash = await bcrypt.hash(req.body.password, 10);
 
 
     try {
         await db.createUser({
             data: {
+                email: email,
                 username: username,
-                firstname: firstName,
-                lastname: lastName,
                 password: pwdHash,
                 isAdmin: false
             }
